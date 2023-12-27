@@ -13,7 +13,7 @@ async def main():
     report_type = "research_report"
 
     # Run Research
-    researcher = GPTResearcher(query=query, report_type=report_type, config_path=None)
+    researcher = GPTResearcher(query=query, report_type=report_type, config_path=None, source_urls=["https://abcnews.go.com/US/burning-man-flooding-happened-stranded-festivalgoers/story?id=102908331","https://www.outsideonline.com/outdoor-adventure/exploration-survival/burning-man-2023-flooding-rain/"])
     report = await researcher.run()
     return report
 
