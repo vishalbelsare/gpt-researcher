@@ -6,9 +6,9 @@ import requests
 from gpt_researcher.scraper import (
     ArxivScraper,
     BeautifulSoupScraper,
-    NewspaperScraper,
     PyMuPDFScraper,
     WebBaseLoaderScraper,
+    BrowserScraper
 )
 
 
@@ -74,9 +74,9 @@ class Scraper:
         SCRAPER_CLASSES = {
             "pdf": PyMuPDFScraper,
             "arxiv": ArxivScraper,
-            "newspaper": NewspaperScraper,
             "bs": BeautifulSoupScraper,
             "web_base_loader": WebBaseLoaderScraper,
+            "browser": BrowserScraper,
         }
 
         scraper_key = None
