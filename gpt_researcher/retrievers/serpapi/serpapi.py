@@ -3,7 +3,6 @@
 # libraries
 import os
 import requests
-from duckduckgo_search import DDGS
 import urllib.parse
 
 
@@ -11,13 +10,14 @@ class SerpApiSearch():
     """
     SerpApi Retriever
     """
-    def __init__(self, query):
+    def __init__(self, query, query_domains=None):
         """
         Initializes the SerpApiSearch object
         Args:
             query:
         """
         self.query = query
+        self.query_domains = query_domains or None
         self.api_key = self.get_api_key()
 
     def get_api_key(self):
@@ -28,7 +28,7 @@ class SerpApiSearch():
         """
         try:
             api_key = os.environ["SERPAPI_API_KEY"]
-        except:
+        except Exception:
             raise Exception("SerpApi API key not found. Please set the SERPAPI_API_KEY environment variable. "
                             "You can get a key at https://serpapi.com/")
         return api_key
@@ -42,10 +42,15 @@ class SerpApiSearch():
         print("SerpApiSearch: Searching with query {0}...".format(self.query))
         """Useful for general internet search queries using SerpApi."""
 
-
         url = "https://serpapi.com/search.json"
+
+        search_query = self.query
+        if self.query_domains:
+            # Add site:domain1 OR site:domain2 OR ... to the search query
+            search_query += " site:" + " OR site:".join(self.query_domains)
+
         params = {
-            "q": self.query,
+            "q": search_query,
             "api_key": self.api_key
         }
         encoded_url = url + "?" + urllib.parse.urlencode(params)
@@ -56,6 +61,7 @@ class SerpApiSearch():
                 search_results = response.json()
                 if search_results:
                     results = search_results["organic_results"]
+                    results_processed = 0
                     for result in results:
                         # skip youtube results
                         if "youtube.com" in result["link"]:
@@ -68,10 +74,9 @@ class SerpApiSearch():
                             "body": result["snippet"],
                         }
                         search_response.append(search_result)
-                        results_processed += 1    
-        except Exception as e: # Fallback in case overload on Tavily Search API
-            print(f"Error: {e}")
-            ddg = DDGS()
-            search_response = ddg.text(self.query, region='wt-wt', max_results=max_results)
+                        results_processed += 1
+        except Exception as e:
+            print(f"Error: {e}. Failed fetching sources. Resulting in empty response.")
+            search_response = []
 
         return search_response

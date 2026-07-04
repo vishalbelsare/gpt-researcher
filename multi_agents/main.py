@@ -12,14 +12,28 @@ from gpt_researcher.utils.enum import Tone
 # Run with LangSmith if API key is set
 if os.environ.get("LANGCHAIN_API_KEY"):
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
-load_dotenv()
+load_dotenv(override=True)
 
 def open_task():
-    with open('task.json', 'r') as f:
+    # Get the directory of the current script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the absolute path to task.json
+    task_json_path = os.path.join(current_dir, 'task.json')
+    
+    with open(task_json_path, 'r') as f:
         task = json.load(f)
 
     if not task:
-        raise Exception("No task provided. Please include a task.json file in the root directory.")
+        raise Exception("No task found. Please ensure a valid task.json file is present in the multi_agents directory and contains the necessary task information.")
+
+    # Override model with STRATEGIC_LLM if defined in environment
+    strategic_llm = os.environ.get("STRATEGIC_LLM")
+    if strategic_llm and ":" in strategic_llm:
+        # Extract the model name (part after the first colon)
+        model_name = strategic_llm.split(":", 1)[1]
+        task["model"] = model_name
+    elif strategic_llm:
+        task["model"] = strategic_llm
 
     return task
 

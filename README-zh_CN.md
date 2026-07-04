@@ -1,15 +1,30 @@
-# 🔎 GPT Researcher
-[![Official Website](https://img.shields.io/badge/Official%20Website-gptr.dev-blue?style=for-the-badge&logo=world&logoColor=white)](https://gptr.dev)
-[![Discord Follow](https://dcbadge.vercel.app/api/server/MN9M86kb?style=for-the-badge)](https://discord.gg/MN9M86kb)
+<div align="center">
+<!--<h1 style="display: flex; align-items: center; gap: 10px;">
+  <img src="https://github.com/assafelovic/gpt-researcher/assets/13554167/a45bac7c-092c-42e5-8eb6-69acbf20dde5" alt="Logo" width="25">
+  GPT Researcher
+</h1>-->
+<img src="https://github.com/assafelovic/gpt-researcher/assets/13554167/20af8286-b386-44a5-9a83-3be1365139c3" alt="Logo" width="80">
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/assafelovic/gpt-researcher?style=social)](https://github.com/assafelovic/gpt-researcher)
+
+####
+
+[![Website](https://img.shields.io/badge/Official%20Website-gptr.dev-teal?style=for-the-badge&logo=world&logoColor=white&color=0891b2)](https://gptr.dev)
+[![Documentation](https://img.shields.io/badge/Documentation-DOCS-f472b6?logo=googledocs&logoColor=white&style=for-the-badge)](https://docs.gptr.dev)
+[![Discord Follow](https://img.shields.io/discord/1127851779011391548?style=for-the-badge&logo=discord&label=Chat%20on%20Discord)](https://discord.gg/QgZXvJAccX)
+
+[![PyPI version](https://img.shields.io/pypi/v/gpt-researcher?logo=pypi&logoColor=white&style=flat)](https://badge.fury.io/py/gpt-researcher)
+![GitHub Release](https://img.shields.io/github/v/release/assafelovic/gpt-researcher?style=flat&logo=github)
+[![Open In Colab](https://img.shields.io/static/v1?message=Open%20in%20Colab&logo=googlecolab&labelColor=grey&color=yellow&label=%20&style=flat&logoSize=40)](https://colab.research.google.com/github/assafelovic/gpt-researcher/blob/master/docs/docs/examples/pip-run.ipynb)
+[![Docker Image Version](https://img.shields.io/docker/v/elestio/gpt-researcher/latest?arch=amd64&style=flat&logo=docker&logoColor=white&color=1D63ED)](https://hub.docker.com/r/gptresearcher/gpt-researcher)
 [![Twitter Follow](https://img.shields.io/twitter/follow/assaf_elovic?style=social)](https://twitter.com/assaf_elovic)
-[![PyPI version](https://badge.fury.io/py/gpt-researcher.svg)](https://badge.fury.io/py/gpt-researcher)
 
--  [English](README.md)
--  [中文](README-zh_CN.md)
--  [日本語](README-ja_JP.md)
+[English](README.md) |
+[中文](README-zh_CN.md) |
+[日本語](README-ja_JP.md) |
+[한국어](README-ko_KR.md)
+</div>
 
+# 🔎 GPT Researcher
 
 **GPT Researcher 是一个智能体代理，专为各种任务的综合在线研究而设计。**
 
@@ -58,7 +73,7 @@ https://github.com/assafelovic/gpt-researcher/assets/13554167/a00c89a6-a295-4dd0
 
 ## 📖 文档
 
-请参阅[此处](https://docs.gptr.dev/docs/gpt-researcher/getting-started)，了解完整文档：
+请参阅[此处](https://docs.gptr.dev/docs/gpt-researcher/getting-started/introduction)，了解完整文档：
 
 - 入门（安装、设置环境、简单示例）
 - 操作示例（演示、集成、docker 支持）
@@ -94,8 +109,15 @@ $ export OPENAI_API_KEY={Your OpenAI API Key here}
 $ export TAVILY_API_KEY={Your Tavily API Key here}
 ```
 
+（可选）如需开启全链路追踪和可观测性，可设置：
+
+```bash
+# $ export LANGCHAIN_TRACING_V2=true
+# $ export LANGCHAIN_API_KEY={Your LangChain API Key here}
+```
+
 - **LLM，我们推荐使用 [OpenAI GPT](https://platform.openai.com/docs/guides/gpt)**，但您也可以使用 [Langchain Adapter](https://python.langchain.com/docs/guides/adapters/openai) 支持的任何其他 LLM 模型（包括开源），只需在 config/config.py 中更改 llm 模型和提供者即可。请按照 [这份指南](https://python.langchain.com/docs/integrations/llms/) 学习如何将 LLM 与 Langchain 集成。
-- **对于搜索引擎，我们推荐使用 [Tavily Search API](https://app.tavily.com)（已针对 LLM 进行优化）**，但您也可以选择其他搜索引擎，只需将 config/config.py 中的搜索提供程序更改为 "duckduckgo"、"googleAPI"、"googleSerp "或 "searx "即可。然后在 config.py 文件中添加相应的 env API 密钥。
+- **对于搜索引擎，我们推荐使用 [Tavily Search API](https://app.tavily.com)（已针对 LLM 进行优化）**，但您也可以选择其他搜索引擎，只需将 config/config.py 中的搜索提供程序更改为 "duckduckgo"、"googleAPI"、"searchapi"、"googleSerp "或 "searx "即可。然后在 config.py 文件中添加相应的 env API 密钥。
 - **我们强烈建议使用 [OpenAI GPT](https://platform.openai.com/docs/guides/gpt) 模型和 [Tavily Search API](https://app.tavily.com) 以获得最佳性能。**
 <br />
 
@@ -109,6 +131,19 @@ $ uvicorn main:app --reload
 > **第 5 步** - 在任何浏览器上访问 http://localhost:8000，享受研究乐趣！
 
 要了解如何开始使用 Docker 或了解有关功能和服务的更多信息，请访问 [documentation](https://docs.gptr.dev) 页面。
+
+## 🔍 可观测性
+
+GPT Researcher 支持 **LangSmith** 以增强链路追踪和可观测性，特别适用于调试和优化复杂的多智能体工作流。
+
+要开启追踪：
+1. 设置以下环境变量：
+   ```bash
+   export LANGCHAIN_TRACING_V2=true
+   export LANGCHAIN_API_KEY=您的_API_KEY
+   export LANGCHAIN_PROJECT="gpt-researcher"
+   ```
+2. 正常运行研究任务。所有基于 LangGraph 的智能体交互将自动被追踪，并可在您的 LangSmith 控制台中查看可视化结果。
 
 ## 🚀 贡献
 我们非常欢迎您的贡献！如果您感兴趣，请查看 [contributing](CONTRIBUTING.md)。

@@ -27,7 +27,7 @@ const FeatureList = [
   {
     title: 'Multi-Agent Assistant',
     Svg: require('../../static/img/multi-agent.png').default,
-    docLink: './docs/gpt-researcher/langgraph',
+    docLink: './docs/gpt-researcher/multi_agents/langgraph',
     description: (
       <>
         Learn how a team of AI agents can work together to conduct research on a given topic, from planning to publication.
@@ -37,10 +37,10 @@ const FeatureList = [
   {
     title: 'Examples and Demos',
     Svg: require('../../static/img/examples.png').default,
-    docLink: './docs/examples/examples',
+    docLink: './docs/examples',
     description: (
       <>
-          Check out Tavily API in action across multiple frameworks and use cases
+          Check out GPT Researcher in action across multiple frameworks and use cases such as hybrid research and long detailed reports.
       </>
     ),
   },

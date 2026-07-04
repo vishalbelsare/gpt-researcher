@@ -6,15 +6,21 @@ from .google.google import GoogleSearch
 from .pubmed_central.pubmed_central import PubMedCentralSearch
 from .searx.searx import SearxSearch
 from .semantic_scholar.semantic_scholar import SemanticScholarSearch
+from .searchapi.searchapi import SearchApiSearch
 from .serpapi.serpapi import SerpApiSearch
 from .serper.serper import SerperSearch
 from .tavily.tavily_search import TavilySearch
 from .exa.exa import ExaSearch
+from .getxapi.getxapi import GetXAPISearch
+from .mcp import MCPRetriever
+from .bocha.bocha import BoChaSearch
+from .xquik.xquik import XquikSearch
 
 __all__ = [
     "TavilySearch",
     "CustomRetriever",
     "Duckduckgo",
+    "SearchApiSearch",
     "SerperSearch",
     "SerpApiSearch",
     "GoogleSearch",
@@ -23,5 +29,9 @@ __all__ = [
     "ArxivSearch",
     "SemanticScholarSearch",
     "PubMedCentralSearch",
-    "ExaSearch"
+    "ExaSearch",
+    "GetXAPISearch",
+    "MCPRetriever",
+    "BoChaSearch",
+    "XquikSearch"
 ]

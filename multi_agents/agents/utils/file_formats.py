@@ -2,7 +2,7 @@ import aiofiles
 import urllib
 import uuid
 import mistune
-
+import os
 
 async def write_to_file(filename: str, text: str) -> None:
     """Asynchronously write text to a file in UTF-8 encoding.
@@ -11,12 +11,15 @@ async def write_to_file(filename: str, text: str) -> None:
         filename (str): The filename to write to.
         text (str): The text to write.
     """
+    # Ensure text is a string
+    if not isinstance(text, str):
+        text = str(text)
+
     # Convert text to UTF-8, replacing any problematic characters
     text_utf8 = text.encode('utf-8', errors='replace').decode('utf-8')
 
     async with aiofiles.open(filename, "w", encoding='utf-8') as file:
         await file.write(text_utf8)
-
 
 async def write_text_to_md(text: str, path: str) -> str:
     """Writes text to a Markdown file and returns the file path.
@@ -47,12 +50,15 @@ async def write_md_to_pdf(text: str, path: str) -> str:
     file_path = f"{path}/{task}.pdf"
 
     try:
+        # Get the directory of the current file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        css_path = os.path.join(current_dir, "pdf_styles.css")
+        
         # Moved imports to inner function to avoid known import errors with gobject-2.0
         from md2pdf.core import md2pdf
         md2pdf(file_path,
                md_content=text,
-               # md_file_path=f"{file_path}.md",
-               css_file_path="./multi_agents/agents/utils/pdf_styles.css",  # Updated path
+               css_file_path=css_path,
                base_url=None)
         print(f"Report written to {file_path}")
     except Exception as e:
@@ -90,7 +96,7 @@ async def write_md_to_word(text: str, path: str) -> str:
 
         print(f"Report written to {file_path}")
 
-        encoded_file_path = urllib.parse.quote(f"{file_path}.docx")
+        encoded_file_path = urllib.parse.quote(file_path)
         return encoded_file_path
 
     except Exception as e:
